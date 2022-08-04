@@ -56,18 +56,18 @@ class StatusController extends OaBaseController {
                 $status = $statusData['config']['status'];
                 $statusDisableScope = 'cant-status-' . $status;
 
-                if (!in_array($statusDisableScope, $scopes)) {
-                    $el = [
-                        'text' => $statusData['config']['text'],
-                        'status' => $statusData['config']['status'],
-                        'bgColor' => $statusData['config']['color'] . '-' . str_replace('b', '', $statusData['config']['brightness']),
-                        'badgeVariant' => isset($statusData['config']['badgeVariant']) ? $statusData['config']['badgeVariant'] : '',
-                    ];
-                    $data[] = $el;
+                $el = [
+                    'text' => $statusData['config']['text'],
+                    'status' => $statusData['config']['status'],
+                    'badgeVariant' => isset($statusData['config']['badgeVariant']) ? $statusData['config']['badgeVariant'] : '',
+                    'disabled' => in_array($statusDisableScope, $scopes),
+                ];
 
-                    if ($statusData['config']['status'] === $elementStatus) {
-                        $currentStatus = $el;
-                    }
+                if ($elementStatus !== $statusData['config']['status']) {
+                    $data[] = $el;
+                }
+                if ($statusData['config']['status'] === $elementStatus) {
+                    $currentStatus = $el;
                 }
             }
         }
