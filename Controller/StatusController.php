@@ -61,11 +61,10 @@ class StatusController extends OaBaseController {
                     'status' => $statusData['config']['status'],
                     'badgeVariant' => isset($statusData['config']['badgeVariant']) ? $statusData['config']['badgeVariant'] : '',
                     'disabled' => in_array($statusDisableScope, $scopes),
+                    'active' => $statusData['config']['status'] === $elementStatus,
                 ];
 
-                if ($elementStatus !== $statusData['config']['status']) {
-                    $data[] = $el;
-                }
+                $data[] = $el;
                 if ($statusData['config']['status'] === $elementStatus) {
                     $currentStatus = $el;
                 }
