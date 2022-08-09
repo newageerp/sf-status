@@ -1,4 +1,5 @@
 <?php
+
 namespace Newageerp\SfStatus\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +11,8 @@ use Newageerp\SfControlpanel\Console\LocalConfigUtils;
 /**
  * @Route(path="/app/nae-core/status")
  */
-class StatusController extends OaBaseController {
+class StatusController extends OaBaseController
+{
 
     /**
      * @Route(path="/element-status", methods={"POST"})
@@ -25,7 +27,7 @@ class StatusController extends OaBaseController {
         $type = $request->get('type');
         $elementId = $request->get('id');
 
-        $statusGetter = 'get'.ucfirst($type);
+        $statusGetter = 'get' . ucfirst($type);
 
         $allStatuses = LocalConfigUtils::getCpConfigFileData('statuses');
 
@@ -56,12 +58,22 @@ class StatusController extends OaBaseController {
                 $status = $statusData['config']['status'];
                 $statusDisableScope = 'cant-status-' . $status;
 
+                $disabled = in_array($statusDisableScope, $scopes);
+
+                $tooltip = '';
+                if ($disabled && method_exists($element, 'getDisabledStatusTooltip')) {
+                    $tooltip = $element->getDisabledStatusTooltip($status);
+                } else if (method_exists($element, 'getStatusTooltip')) {
+                    $tooltip = $element->getStatusTooltip($status);
+                }
+
                 $el = [
                     'text' => $statusData['config']['text'],
                     'status' => $statusData['config']['status'],
                     'badgeVariant' => isset($statusData['config']['badgeVariant']) ? $statusData['config']['badgeVariant'] : '',
-                    'disabled' => in_array($statusDisableScope, $scopes),
+                    'disabled' => $disabled,
                     'active' => $statusData['config']['status'] === $elementStatus,
+                    'tooltip' => $tooltip
                 ];
 
                 $data[] = $el;
