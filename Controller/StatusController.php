@@ -83,6 +83,12 @@ class StatusController extends OaBaseController
             }
         }
 
+        usort(
+            $data,
+            function ($status1, $status2) {
+                return $status1['status'] <=> $status2['status'];
+            }
+        );
 
         return $this->json(['data' => $data, 'current' => $currentStatus]);
     }
