@@ -64,7 +64,7 @@ class StatusController extends OaBaseController
                 if ($disabled && method_exists($element, 'getDisabledStatusTooltip')) {
                     $tooltip = $element->getDisabledStatusTooltip($status);
                 } else if (method_exists($element, 'getStatusTooltip')) {
-                    $tooltip = $element->getStatusTooltip($status);
+                    $tooltip = $element->getStatusTooltip($status, $statusData['config']['type']);
                 }
 
                 $el = [
