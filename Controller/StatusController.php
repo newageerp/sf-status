@@ -56,7 +56,7 @@ class StatusController extends OaBaseController
 
             foreach ($statuses as $statusData) {
                 $status = $statusData['config']['status'];
-                $statusDisableScope = 'cant-status-' . $status;
+                $statusDisableScope = 'cant-' . $statusData['config']['type'] . '-' . $status;
 
                 $disabled = in_array($statusDisableScope, $scopes);
 
