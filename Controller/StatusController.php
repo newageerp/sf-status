@@ -23,6 +23,12 @@ class StatusController extends OaBaseController
     {
         $request = $this->transformJsonBody($request);
 
+        $user = $this->findUser($request);
+        if (!$user) {
+            throw new Exception('Invalid user');
+        }
+        AuthService::getInstance()->setUser($user);
+
         $schema = $request->get('schema');
         $type = $request->get('type');
         $elementId = $request->get('id');
