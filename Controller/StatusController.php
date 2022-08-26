@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Newageerp\SfBaseEntity\Controller\OaBaseController;
 use Newageerp\SfControlpanel\Console\LocalConfigUtils;
 use Newageerp\SfAuth\Service\AuthService;
+use Exception;
 
 /**
  * @Route(path="/app/nae-core/status")
