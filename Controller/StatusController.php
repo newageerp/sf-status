@@ -57,8 +57,9 @@ class StatusController extends OaBaseController
             foreach ($statuses as $statusData) {
                 $status = $statusData['config']['status'];
                 $statusDisableScope = 'cant-' . $statusData['config']['type'] . '-' . $status;
+                $statusDisableScopeAll = 'cant-' . $statusData['config']['type'] . '-all';
 
-                $disabled = in_array($statusDisableScope, $scopes);
+                $disabled = in_array($statusDisableScope, $scopes) || in_array($statusDisableScopeAll, $scopes);
 
                 $tooltip = '';
                 if (isset($statusData['config']['tooltip'])) {
